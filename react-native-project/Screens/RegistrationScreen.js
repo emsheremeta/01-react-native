@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function RegistrationScreen()  {
   const initialState ={
+    login:'',
     email: '',
     password: ''
 };
@@ -22,10 +23,11 @@ return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 <ImageBackground source={require('../assets/photo_bg.jpg')}  style={styles.img}>
 <KeyboardAvoidingView 
- keyboardVerticalOffset = {380} 
- behavior={Platform.OS === "ios" ? "padding" : ""} >
+ behavior={Platform.OS === "ios" ? 'padding' : ""} 
+keyboardVerticalOffset = {300} 
+>
 
-  <View style={styles.textBackground} >
+<View style={styles.textBackground} >
 <View style={styles.inputWrapper}>
     
     <View style={styles.titlePadding}>
@@ -85,6 +87,7 @@ backgroundColor:'#000000'
     borderRadius:25,
     position:'absolute',
     top:Platform.OS === 'ios'? -100 : -120,
+    left: 0
     
   },
   titlePadding:{
@@ -104,10 +107,7 @@ backgroundColor:'#000000'
   },
   inputWrapper:{
     flex:1,
-    alignItems: 'center',
-    marginBottom:33,
-    
-
+    alignItems: 'center',    
   },
 
   input:{

@@ -1,38 +1,142 @@
-
 import React from "react";
+import {Text,TextInput, StyleSheet, View, ImageBackground, TouchableOpacity, Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView} from "react-native";
 import { useState } from "react";
-import { StyleSheet, Text, View, TouchableWithoutFeedback, ImageBackground  } from 'react-native';
 
-import { TextInput } from "react-native";
+export default function RegistrationScreen()  {
+  const initialState ={
+    email: '',
+    password: ''
+};
+const [isShowKeyboard, setIsShowKeyboard ] = useState(false);
+const [state, setState] = useState(initialState);
 
- function  LoginScreen () {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const emailHandler = (email) => setEmail(email);
-  // const passwordHandler = (password )=> setPassword(password);
-  return (
-   <View style={styles.container}>
-    <ImageBackground
-    source={require('../assets/photo_bg.jpg')}
-    style={styles.img}>
+const keyboardHide = () =>{
+  setIsShowKeyboard(false);
+  Keyboard.dismiss();
+  console.log(state);
+  setState(initialState)
+}
 
-    </ImageBackground>
-   
-   </View>
-  );
+return (
+  <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+<ImageBackground source={require('../assets/photo_bg.jpg')}  style={styles.img}>
+<KeyboardAvoidingView 
+ behavior={Platform.OS === "ios" ? 'padding' : ""} 
+keyboardVerticalOffset = {300} 
+>
+
+<View style={styles.textBackground} >
+<View style={styles.inputWrapper}>
+    
+    <View style={styles.titlePadding}>
+    <Text  style={styles.title} >Login</Text>
+    </View>
+
+<TextInput
+style={styles.input}
+placeholder='Type email here'
+onFocus={()=>setIsShowKeyboard(true)}
+value={state.email}
+onChangeText={(value) => setState((prevState) => ({...prevState, email: value}))}
+/>
+<TextInput
+style={styles.input}
+placeholder='Type password here'
+secureTextEntry ={true}
+onFocus={()=>setIsShowKeyboard(true)}
+value={state.password}
+onChangeText={(value) => setState((prevState) => ({...prevState, password: value}))}
+/>
+<TouchableOpacity style={styles.btn} onPress={keyboardHide}>
+  <Text style={styles.btnText}>Login</Text>
+</TouchableOpacity>
+<Text style={styles.textInfo}>Don`t have an account? REGISTRATION</Text>
+
+</View>
+</View>
+</KeyboardAvoidingView>
+</ImageBackground>
+</TouchableWithoutFeedback>
+  </View>
+)
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create ({
   container:{
+flex:1,
+backgroundColor:'#000000'
+  },
+  img:{
     flex:1,
-    backgroundColor:'#000000'
-      },
-      img:{
-        flex:1,
-       resizeMode:'cover',
-       justifyContent: 'center'
-      },
-  
-});
+   resizeMode:'cover',
+   justifyContent: 'center'
+  },
+  textBackground:{
+    backgroundColor:'#FFFFFF',
+    height:600,
+    width:Platform.OS === 'ios'? 415 : 395,
+    borderRadius:25,
+    position:'absolute',
+    top:Platform.OS === 'ios'? -100 : -120,
+    left: 0
+    
+  },
+  titlePadding:{
+    paddingTop:92,
+    paddingLeft:96,
+    paddingRight:95,
+  },
+  title:{
+    color:'#212121',
+    width: 184,
+    height: Platform.OS === 'ios'? 35 : 40,
+    fontWeight:500,
+    fontSize:30,
+    marginBottom:33,
+    textAlign: 'center',
+ 
+  },
+  inputWrapper:{
+    flex:1,
+    alignItems: 'center',    
+  },
 
-export default LoginScreen;
+  input:{
+    width:Platform.OS === 'ios'? 380 : 360,
+    height: 50,
+    backgroundColor:'#E8E8E8',
+    borderRadius:8,
+    paddingLeft:16,
+    marginBottom:16
+  },
+  btn:{
+    width: Platform.OS === 'ios'? 380 : 360,
+    height:50,
+    backgroundColor:'#FF6C00',
+    borderRadius:100,
+    paddingLeft:93.5,
+    paddingRight:93.5,
+    paddingTop:16,
+    alignItems: 'center',
+    marginTop:20,
+    
+  },
+  btnText:{
+    color:'#FFFFFF',
+    fontWeight:400,
+    fontSize:16,
+
+  },
+  textInfo:{
+    color:'#1B4371',
+    fontSize:16,
+    fontWeight:400,
+    marginTop:16,
+    paddingLeft:55,
+    paddingRight:54,
+    marginBottom:66,
+    
+  }
+ 
+})
